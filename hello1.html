@@ -1,0 +1,515 @@
+<!doctype html>
+<html>
+	<head>
+		<style type="text/css">
+			
+			*{
+				color:#2e2e2e;
+				font-family:'Tahoma', 'Geneva', 'sans-serif';
+				size:40px; 
+			}
+
+			#h{
+				color:#619EAB;
+				width:70%;
+				height: 7.5%;
+				position: absolute;
+				top: 20%;
+				left: 17.5%;
+				text-align: center;
+				
+			}
+
+			#heading{
+				text-align:center;
+				font-size:80px;
+				position: absolute;
+				top:5%;
+				color: #42737d;
+				margin:0.3%;
+				
+			}
+
+			#companies_nse{
+				color: black;
+				font-size: 20px;
+				width: 90%;
+				position: absolute;
+				left:9%;
+				top: 7.5%;
+				padding-bottom: 1%;
+			}
+
+			#companies_bse{
+				color: black;
+				font-size: 20px;
+				width: 90%;
+				position: absolute;
+				left:9%;
+				top: 12.5%;
+				padding-bottom: 1%;
+			}
+
+
+			#currency{
+				opacity: 0.0;
+			}
+		
+			#percent{
+				opacity: 0.0;
+			}
+
+
+			#gra{
+				top:40%;
+				font-size:25px;
+				color:black;
+				position: absolute;
+				left:3%;
+				width:50%;
+				text-align:center; 
+			}
+
+			#grb{
+				top:40%;
+				font-size:25px;
+				color:black;
+				position: absolute;
+				left:55%; 
+				width: 42%;
+				text-align:center;
+			}
+
+			#grapha{
+				border:2px solid black !important; 
+				position: absolute!important;
+				top:50% !important;
+				left:3% !important;
+				width:50% !important;
+			}
+
+			#graphb{
+				border:2px solid black !important; 
+				position: absolute!important;
+				top:50% !important;
+				left:55% !important;
+				width:42% !important;
+			}
+
+			.invisible{
+				opacity:0.0;
+			}
+
+			.head{
+				position: absolute;
+				left:0%;
+				width:8%;
+				height:5%;
+				font-size:25px;
+				color: white;
+				text-align: center;
+
+			}
+
+			#nse{
+				top:9%;
+				width:8%;
+				background-color:#619EAB;
+				border-bottom:1px solid white;
+			}
+
+			#bse{
+				top:14.5%;
+				width:8%;
+				background-color: #619EAB;
+			}
+
+			#metal_price{
+				border-bottom: 1px solid #619EAB;
+				top:0%;
+				margin: 0%;
+			}
+
+			#curr{
+				border:2px solid black ;
+				position: absolute;
+				left:3%;
+				top:120%;
+			}
+			.row{
+				border:1px solid #619EAB;
+			}
+			#enter{
+				border: 2px solid black;
+				position: absolute;
+				left:25%;
+				top:125%;
+				width:62%;
+				height:40%;
+				padding:5%;
+			}
+
+			#information{
+				border: 1px solid #619EAB;
+				position:relative;
+				top:30%;
+				
+			}
+			#table_row
+			{
+				text-align: center;
+			}
+
+			#compp{
+				font-size: 45px;
+				position: absolute;
+				top:7%;
+				text-align: center;
+				width:100%;
+				left:0%;
+			}
+
+			#xyz{
+				
+				position: absolute;
+				top:55%;
+				left:1.7%;
+				font-size: 21px;
+
+			}
+
+			#stock{
+				position: absolute;
+				width:20%;
+				top:30%;
+				left:33%;
+				height:12%;
+				font-size: 30PX;
+				padding-left: 20px;
+			}
+
+			#symbol{
+				position: absolute;
+				width:10%;
+				top:31%;
+				left:58%;
+				height: 12%;
+				background-color: #619EAB;
+				border:none;
+				font-size: 30px;
+				color: white;
+			}
+
+		</style>
+		
+		<script type = "text/javascript" src="{{url_for('static', filename='jscharts.js')}}"></script>
+
+
+   	</head>
+    <body>
+     	<marquee id  = "metal_price"><pre> {{metal_prices}}</pre></marquee>
+	    <div id = 'h'>
+			<p id = 'heading'>STOCK MARKET ANALYSIS</p>
+		</div>
+		<br><br><br><br><br><hr>
+
+	
+		<div class = "head" id = "nse">NSE</div>
+		<div class = "head" id = "bse">BSE</div>
+
+      	<marquee id = "companies_nse"><pre>{{nse}}</pre></marquee>
+      	<marquee id = "companies_bse"><pre>{{bse}}</pre></marquee>
+ 
+
+      	<br><br><br><br><hr>
+      	<h1 id = "currency">{{currencies}}</h1>
+ 		
+ 		<div id="gra">Percentage Of sales Company-vise</div>
+ 		<div id="grb">Number Of Transactions at Different Times Of the Day</div>
+ 		<div id="grapha"></div>
+ 		<div id="graphb"></div>
+
+ 		<h1 id = "time1" class = "invisible">{{t1}}</h1>
+ 		<h1 id = "time2" class = "invisible">{{t2}}</h1>
+ 		<h1 id = "time3" class = "invisible">{{t3}}</h1>
+ 		<h1 id = "time4" class = "invisible">{{t4}}</h1>
+
+ 		<h1 id = "percent">{{percentage}}</h1>
+ 		<h1 id = "info" class="invisible">{{comp_info}}</h1>
+ 		<div id = "enter">
+ 		<div id = "compp">COMPANY DETAILS</div>
+ 		<input type = "text" id = "stock" default = "AIL">
+ 		<input type = "button" id = "symbol" value = "enter">
+		</div>
+		<script type="text/javascript">
+		
+		var c = document.getElementById('currency');
+		var comp = document.getElementById("info");
+		comp = comp.innerHTML;
+		comp = comp.split(",");
+		
+		var but = document.getElementById("symbol");
+		but.addEventListener("click",getDetails);
+		function getDetails(){
+			var check = document.getElementById("xyz");
+			if(check != null)
+			{
+				var temp = document.getElementById("enter");
+				temp.removeChild(check);
+			}
+			var text1 = document.getElementById("stock").value;
+			text1= text1.toUpperCase()
+			//window.alert(text1);
+			var text = "";
+			for(var i= 0 ;i <comp.length;i++){
+				if(comp[i].indexOf(text1)>0){
+					text = comp[i];
+					break;
+				}
+			}
+			if(text != "")
+			{
+				var header = "Company_Name Stock_symbol quote IPO beta trend opening_rate closing_rate";
+				var table = document.createElement("table");
+				table.setAttribute("id", "xyz");
+				table.setAttribute("cellpadding", "10px");
+				head = header.split(" ");
+				var row = document.createElement("tr");
+				for(var i = 0;i < head.length;i++)
+				{
+					var temp = document.createElement("th");
+					temp.setAttribute("id", "table_row");
+					temp.style= "border: 1px solid black";
+					var txt = document.createTextNode(head[i]);
+					temp.appendChild(txt);
+					row.appendChild(temp);
+
+				}
+				table.appendChild(row);
+				text = text.split("*");
+				row = document.createElement("tr");
+				for(var i = 0;i < text.length-1;i++)
+				{
+					var temp = document.createElement("td");
+					temp.setAttribute("id", "table_row");
+					temp.style = "border: 1px solid #619EAB";
+					var txt = document.createTextNode(text[i]);
+					temp.appendChild(txt);
+					row.appendChild(temp);
+				}
+				table.appendChild(row);
+
+				// text = text.join("			");
+				// window.alert(text);
+				// var head = document.createTextNode(header);
+				// var info = document.createTextNode(text);
+				// var div = document.createElement("div");
+				// div.id = "information";
+				var ent = document.getElementById("enter");
+				// div.appendChild(head);
+				// div.appendChild(bre);
+				// div.appendChild(info);
+				ent.appendChild(table);
+			}
+			else
+			{
+				window.alert("Enter Valid Name");
+			}
+		}
+
+		</script>
+		
+		<script type="text/javascript">
+
+		var p = document.getElementById('percent');
+		var data = p.innerHTML;
+		data = data.split(",");
+		
+		for(var i=0;i<data.length;i++){
+			data[i]= data[i].split("*");
+			
+			data[i][1]= parseFloat(data[i][1]);
+		}
+		
+		myData = data;
+
+		var myChart = new JSChart('grapha', 'bar');
+		myChart.setDataArray(myData);
+		//myChart.setTitle('SALE PERCENTAGE');
+		myChart.setTitleColor('#ffffff');
+		myChart.setAxisNameX('');
+		myChart.setAxisNameY('%');
+		myChart.setAxisColor('#00004c');
+		myChart.setAxisNameFontSize(20);
+		myChart.setAxisNameColor('#00004c');
+		myChart.setAxisValuesColor('#7E7E7E');
+		myChart.setBarValuesColor('#00004c');
+		myChart.setAxisPaddingTop(80);
+		myChart.setAxisPaddingRight(30);
+		myChart.setAxisPaddingLeft(60);
+		myChart.setAxisPaddingBottom(30);
+		myChart.setTextPaddingLeft(20);
+		myChart.setTitleFontSize(30);
+		myChart.setBarBorderWidth(15);
+		myChart.setBarBorderColor('#990000');
+		myChart.setBarSpacingRatio(100);
+		myChart.setGrid(false);
+		myChart.setBackgroundImage('chart_bg.jpg');
+		myChart.setSize(750, 450);
+		myChart.draw();
+
+
+		var time1 = document.getElementById('time1');
+		var time2 = document.getElementById('time2');
+		var time3 = document.getElementById('time3');
+		var time4 = document.getElementById('time4');
+		
+		time1 = parseInt(time1.innerHTML);
+		time2 = parseInt(time2.innerHTML);
+		time3 = parseInt(time3.innerHTML);
+		time4 = parseInt(time4.innerHTML);		
+		
+		var myChart = new JSChart('graphb', 'pie');
+
+		myChart.setDataArray([['9:00-11:00', time1],['11:00-13:00', time2],['13:00-15:00', time3],['15:00-17:00', time4]]);
+		myChart.colorize(['#99CDFB','#3366FB','#0000FA','#F8CC00']);
+		myChart.setSize(600, 450);
+		myChart.setTitle('Number of Transactions at different times of the day');
+		myChart.setTitleFontFamily('Times New Roman');
+		myChart.setTitleFontSize(15);
+		myChart.setTitleColor('#fFfFfF');
+		myChart.setPieRadius(170);
+		myChart.setPieValuesColor('#FFFFFF');
+		myChart.setPieValuesFontSize(20);
+		myChart.setPiePosition(220, 235);
+		myChart.setShowXValues(false);
+		myChart.setLegend('#99CDFB', '9:00-11:00');
+		myChart.setLegend('#3366FB', '11:00-13:00');
+		myChart.setLegend('#0000FA', '13:00-15:00');
+		myChart.setLegend('#F8CC00', '15:00-17:00');
+		myChart.setLegendShow(true);
+		myChart.setLegendFontFamily('Times New Roman');
+		myChart.setLegendFontSize(25);
+		myChart.setLegendPosition(450, 200);
+		myChart.setPieAngle(30);
+		myChart.set3D(false);
+		myChart.draw();
+		
+
+		function convert(a)
+		{
+			
+			var temp = document.getElementById("currency");
+			//window.alert(temp.innerHTML);
+			var data = temp.innerHTML;
+			data = data.split(",");
+			var i = 0
+			var len = data.length
+			for(i = 0;i < len;i++)
+			{
+				data[i] = data[i].split("*");
+			}
+			var val = document.getElementById("val");
+			val = parseFloat(val.value);
+			//window.alert(a);
+			for(i = 0;i < len;i++)
+			{
+				if(data[i][1] == a)
+				{
+					val = val * parseFloat(data[i][2]);
+					break;
+				}
+			}
+			window.alert(val.toString() + " " + a + "s");
+			var d = document.getElementById("val");
+			var q = document.createTextNode(val.toString());
+			var n = document.createElement("div");
+			n.appendChild(q);
+			d.appendChild(n);
+
+
+
+
+		}
+		window.onload = function()
+		{
+			var temp = document.getElementById("currency");
+			//window.alert(temp.innerHTML);
+			var data = temp.innerHTML;
+			data = data.split(",");
+			var i = 0
+			var len = data.length
+			for(i = 0;i < len;i++)
+			{
+				data[i] = data[i].split("*");
+			}
+//			window.alert(data[0][0]);
+			var x = document.createElement("table");
+			x.style= "border:2px solid black ; position: absolute; left:3%; top:125%; padding:2px;"; 
+			for(i = 0;i < len;i++)
+			{
+				var y = document.createElement("tr");
+				var a = document.createElement("td");
+				var b = document.createElement("td");
+				var c = document.createElement("td");
+				a.innerHTML = data[i][0];
+				b.innerHTML = data[i][1];
+				c.innerHTML = data[i][2];
+				a.style = "border: 1px solid #619EAB; padding : 2px;";
+				b.style = "border: 1px solid #619EAB; padding : 2px;";
+				c.style = "border: 1px solid #619EAB; padding : 2px;"; 
+
+				y.appendChild(a);
+				y.appendChild(b);
+				y.appendChild(c);
+				x.appendChild(y);
+
+			}
+			document.body.appendChild(x);
+			top_div = document.createElement("div");
+			top_div.id = "top";
+			top_div.style="position:absolute; top: 190%; left: 25% ;border: 2px solid black ;width:72%; height: 9%;"
+			x = document.createElement("input");
+			x.setAttribute("type", "text");
+			x.setAttribute("id", "val");
+			x.style = " position: absolute; left: 1%; padding: 10px; font-size: 20px; border: 1px solid black; top:13%; width: 15%;"
+			x.setAttribute("placeholder", "Enter USD");
+			top_div.appendChild(x);
+			var a = document.createElement("div");
+			var b = document.createElement("div");
+			var c = document.createElement("div");
+			var d = document.createElement("div");
+			var e = document.createElement("div");
+
+			a.style = "position: absolute; left: 22%; padding: 10px; font-size: 20px; background-color:#619EAB; color:white; top:13%;";
+			b.style = "position: absolute; left: 39%; padding: 10px; font-size: 20px; background-color:#619EAB; color:white; top:13%;";
+			c.style = "position: absolute; left: 58%; padding: 10px; font-size: 20px; background-color:#619EAB; color:white; top:13%;";
+			d.style = "position: absolute; left: 76%; padding: 10px; font-size: 20px; background-color:#619EAB; color:white; top:13%;";
+			e.style = "position: absolute; left: 85%; padding: 10px; font-size: 20px; background-color:#619EAB; color:white; top:13%;";
+						var temp = document.createTextNode("Indian Rupee");
+			a.appendChild(temp);
+			var temp = document.createTextNode("Australian Dollar");
+			b.appendChild(temp);
+			var temp = document.createTextNode("Canadian Dollar");
+			c.appendChild(temp);
+			var temp = document.createTextNode("Euro");
+			d.appendChild(temp);
+			var temp = document.createTextNode("Emirati Dirham");
+			e.appendChild(temp);
+			top_div.appendChild(a);
+			top_div.appendChild(b);
+			top_div.appendChild(c);
+			top_div.appendChild(d);
+			top_div.appendChild(e);
+			document.body.appendChild(top_div);
+			a.setAttribute("onclick", "convert(this.innerHTML)");
+			b.setAttribute("onclick", "convert(this.innerHTML)");
+			c.setAttribute("onclick", "convert(this.innerHTML)");
+			d.setAttribute("onclick", "convert(this.innerHTML)");
+			e.setAttribute("onclick", "convert(this.innerHTML)");
+		}
+		</script> 
+    </body>
+      
+</html>
+
